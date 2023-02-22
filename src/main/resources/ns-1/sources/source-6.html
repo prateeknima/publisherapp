@@ -1,0 +1,173 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserResource</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.merative.publisher</a>
+</div>
+
+<h1>Coverage Summary for Class: UserResource (com.merative.publisher)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserResource</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.merative.publisher;
+&nbsp;import com.merative.publisher.model.User;
+&nbsp;import com.merative.publisher.security.GenerateToken;
+&nbsp;import javax.annotation.security.PermitAll;
+&nbsp;import javax.annotation.security.RolesAllowed;
+&nbsp;import javax.enterprise.context.RequestScoped;
+&nbsp;import javax.inject.Inject;
+&nbsp;import javax.ws.rs.Consumes;
+&nbsp;import javax.ws.rs.DELETE;
+&nbsp;import javax.ws.rs.GET;
+&nbsp;import javax.ws.rs.POST;
+&nbsp;import javax.ws.rs.PUT;
+&nbsp;import javax.ws.rs.Path;
+&nbsp;import javax.ws.rs.PathParam;
+&nbsp;import javax.ws.rs.Produces;
+&nbsp;import javax.ws.rs.core.Context;
+&nbsp;import javax.ws.rs.core.MediaType;
+&nbsp;import javax.ws.rs.core.Response;
+&nbsp;import javax.ws.rs.core.SecurityContext;
+&nbsp;
+&nbsp;
+&nbsp;@Path(&quot;users&quot;)
+&nbsp;@Produces(MediaType.APPLICATION_JSON)
+&nbsp;@Consumes(MediaType.APPLICATION_JSON)
+&nbsp;@RequestScoped
+<b class="fc">&nbsp;public class UserResource {</b>
+&nbsp;
+&nbsp;    @Inject
+&nbsp;    UserService userService;
+&nbsp;
+&nbsp;
+&nbsp;    @GET
+&nbsp;    @RolesAllowed({&quot;Administrator&quot;, &quot;Author&quot;, &quot;Publisher&quot;, &quot;Reviewer&quot;})
+&nbsp;    public Response get(@Context SecurityContext ctx){
+<b class="fc">&nbsp;        return userService.get();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @POST
+&nbsp;    @RolesAllowed(&quot;Administrator&quot;)
+&nbsp;    public Response create(User user){
+<b class="fc">&nbsp;        return userService.create(user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GET
+&nbsp;    @Path(&quot;generate-new-user-key/{id}&quot;)
+&nbsp;    @RolesAllowed({&quot;Administrator&quot;, &quot;Author&quot;, &quot;Publisher&quot;, &quot;Reviewer&quot;})
+&nbsp;    public Response requestNewUserKey(@Context SecurityContext ctx,@PathParam(&quot;id&quot;) long id){
+<b class="fc">&nbsp;        return userService.requestNewUserKey(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @POST
+&nbsp;    @PermitAll
+&nbsp;    @Path(&quot;token&quot;)
+&nbsp;    public String generateJWTToken(User user) throws Exception {
+<b class="nc">&nbsp;        return GenerateToken.get(user.getUsername(), user.getUserKey());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PUT
+&nbsp;    @RolesAllowed({&quot;Administrator&quot;,&quot;Author&quot;})
+&nbsp;    public Response update(User user){
+<b class="fc">&nbsp;        return userService.update(user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DELETE
+&nbsp;    @Path(&quot;{id}&quot;)
+&nbsp;    @RolesAllowed({&quot;Administrator&quot;})
+&nbsp;    public void delete(@PathParam(&quot;id&quot;) Long id){
+<b class="fc">&nbsp;         userService.delete(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-20 23:46</div>
+</div>
+</body>
+</html>

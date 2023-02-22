@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.merative.publisher.UserResourceTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2023-02-21T11:36:35" hostname="DESKTOP-GO61V4S" time="0.702">
+  <properties/>
+  <testcase name="testGetAllUsersEndpointReviewer()" classname="com.merative.publisher.UserResourceTest" time="0.047"/>
+  <testcase name="testGetAllUsersEndpointPublisher()" classname="com.merative.publisher.UserResourceTest" time="0.134"/>
+  <testcase name="testGetAllUsersEndpointAuthor()" classname="com.merative.publisher.UserResourceTest" time="0.038"/>
+  <testcase name="testAddUserEndpointReviewer()" classname="com.merative.publisher.UserResourceTest" time="0.02"/>
+  <testcase name="testGetAllUsersEndpointAdministrator()" classname="com.merative.publisher.UserResourceTest" time="0.023"/>
+  <testcase name="testAddUserEndpointUnauthorizedUsers()" classname="com.merative.publisher.UserResourceTest" time="0.033"/>
+  <testcase name="testGenerateNewUserKeyEndpointAuthor()" classname="com.merative.publisher.UserResourceTest" time="0.083"/>
+  <testcase name="testAddUserEndpointAdministrator()" classname="com.merative.publisher.UserResourceTest" time="0.031"/>
+  <testcase name="testGetAllUsersEndpointUnauthorizedUsers()" classname="com.merative.publisher.UserResourceTest" time="0.016"/>
+  <testcase name="testAddUserEndpointAuthor()" classname="com.merative.publisher.UserResourceTest" time="0.024"/>
+  <testcase name="testAddUserEndpointPublisher()" classname="com.merative.publisher.UserResourceTest" time="0.026"/>
+  <testcase name="testUpdateUserEndpointPublisher()" classname="com.merative.publisher.UserResourceTest" time="0.022"/>
+  <testcase name="testUpdateUserEndpointUnauthorizedUsers()" classname="com.merative.publisher.UserResourceTest" time="0.018"/>
+  <testcase name="testDeleteUserEndpointPublisher()" classname="com.merative.publisher.UserResourceTest" time="0.015"/>
+  <testcase name="testUpdateUserEndpointAuthor()" classname="com.merative.publisher.UserResourceTest" time="0.024"/>
+  <testcase name="testDeleteUserEndpointAdministrator()" classname="com.merative.publisher.UserResourceTest" time="0.019"/>
+  <testcase name="testUpdateUserEndpointReviewer()" classname="com.merative.publisher.UserResourceTest" time="0.015"/>
+  <testcase name="testDeleteUserEndpointReviewer()" classname="com.merative.publisher.UserResourceTest" time="0.013"/>
+  <testcase name="testUpdateUserEndpointAdministrator()" classname="com.merative.publisher.UserResourceTest" time="0.024"/>
+  <testcase name="testDeleteUserEndpointAuthor()" classname="com.merative.publisher.UserResourceTest" time="0.016"/>
+  <testcase name="testDeleteUserEndpointUnauthorizedUsers()" classname="com.merative.publisher.UserResourceTest" time="0.029"/>
+  <system-out><![CDATA[Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    update
+        users 
+    set
+        accountLocked=?,
+        firstname=?,
+        lastname=?,
+        user_key=?,
+        user_role=?,
+        username=? 
+    where
+        id=?
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    insert 
+    into
+        users
+        (id, accountLocked, firstname, lastname, user_key, user_role, username) 
+    values
+        (default, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+Hibernate: 
+    select
+        userentity0_.id as id1_1_0_,
+        userentity0_.accountLocked as accountl2_1_0_,
+        userentity0_.firstname as firstnam3_1_0_,
+        userentity0_.lastname as lastname4_1_0_,
+        userentity0_.user_key as user_key5_1_0_,
+        userentity0_.user_role as user_rol6_1_0_,
+        userentity0_.username as username7_1_0_ 
+    from
+        users userentity0_ 
+    where
+        userentity0_.id=?
+Hibernate: 
+    select
+        userentity0_.id as id1_1_,
+        userentity0_.accountLocked as accountl2_1_,
+        userentity0_.firstname as firstnam3_1_,
+        userentity0_.lastname as lastname4_1_,
+        userentity0_.user_key as user_key5_1_,
+        userentity0_.user_role as user_rol6_1_,
+        userentity0_.username as username7_1_ 
+    from
+        users userentity0_
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

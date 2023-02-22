@@ -1,0 +1,234 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ArticleService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.merative.publisher</a>
+</div>
+
+<h1>Coverage Summary for Class: ArticleService (com.merative.publisher)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ArticleService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77.3%
+  </span>
+  <span class="absValue">
+    (51/66)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.merative.publisher;
+&nbsp;
+&nbsp;import com.merative.publisher.hibernate.entities.ArticleEntity;
+&nbsp;import com.merative.publisher.hibernate.entities.UserEntity;
+&nbsp;import com.merative.publisher.model.*;
+&nbsp;import io.quarkus.security.identity.SecurityIdentity;
+&nbsp;import org.owasp.html.HtmlPolicyBuilder;
+&nbsp;import org.owasp.html.PolicyFactory;
+&nbsp;import javax.enterprise.context.ApplicationScoped;
+&nbsp;import javax.inject.Inject;
+&nbsp;import javax.naming.directory.InvalidAttributesException;
+&nbsp;import javax.transaction.Transactional;
+&nbsp;import javax.ws.rs.NotFoundException;
+&nbsp;import javax.ws.rs.core.Response;
+&nbsp;import java.util.List;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;
+&nbsp;@ApplicationScoped
+<b class="fc">&nbsp;public class ArticleService {</b>
+&nbsp;    @Inject
+&nbsp;    SecurityIdentity securityIdentity;
+<b class="fc">&nbsp;    final PolicyFactory policy = new HtmlPolicyBuilder()</b>
+<b class="fc">&nbsp;            .allowElements(&quot;a&quot;, &quot;b&quot;, &quot;blockquote&quot;, &quot;br&quot;, &quot;caption&quot;, &quot;cite&quot;, &quot;code&quot;, &quot;col&quot;,</b>
+&nbsp;                    &quot;colgroup&quot;, &quot;dd&quot;, &quot;del&quot;, &quot;dfn&quot;, &quot;dl&quot;, &quot;dt&quot;, &quot;em&quot;, &quot;h1&quot;, &quot;h2&quot;, &quot;h3&quot;, &quot;h4&quot;, &quot;h5&quot;, &quot;h6&quot;,
+&nbsp;                    &quot;i&quot;, &quot;img&quot;, &quot;li&quot;, &quot;ol&quot;, &quot;p&quot;, &quot;pre&quot;, &quot;q&quot;, &quot;small&quot;, &quot;strike&quot;, &quot;strong&quot;, &quot;sub&quot;, &quot;sup&quot;,
+&nbsp;                    &quot;table&quot;, &quot;tbody&quot;, &quot;td&quot;, &quot;tfoot&quot;, &quot;th&quot;, &quot;thead&quot;, &quot;tr&quot;, &quot;u&quot;, &quot;ul&quot;)
+<b class="fc">&nbsp;            .allowAttributes(&quot;align&quot;, &quot;alt&quot;, &quot;bgcolor&quot;, &quot;border&quot;, &quot;cellpadding&quot;, &quot;cellspacing&quot;, &quot;class&quot;,</b>
+&nbsp;                    &quot;color&quot;, &quot;colspan&quot;, &quot;dir&quot;, &quot;href&quot;, &quot;hspace&quot;, &quot;id&quot;, &quot;lang&quot;,
+&nbsp;                    &quot;media&quot;, &quot;rowspan&quot;, &quot;size&quot;, &quot;src&quot;, &quot;style&quot;, &quot;target&quot;, &quot;title&quot;, &quot;type&quot;, &quot;valign&quot;, &quot;vspace&quot;,
+&nbsp;                    &quot;width&quot;, &quot;background-color&quot;, &quot;color&quot;, &quot;font-size&quot;, &quot;margin&quot;, &quot;margin-bottom&quot;,
+&nbsp;                    &quot;margin-left&quot;, &quot;margin-right&quot;, &quot;margin-top&quot;, &quot;padding&quot;, &quot;padding-bottom&quot;, &quot;padding-left&quot;,
+<b class="fc">&nbsp;                    &quot;padding-right&quot;, &quot;padding-top&quot;, &quot;text-align&quot;).globally()</b>
+<b class="fc">&nbsp;            .allowUrlProtocols(&quot;http&quot;, &quot;https&quot;)</b>
+<b class="fc">&nbsp;            .toFactory();</b>
+&nbsp;
+&nbsp;    public Response get() {
+<b class="fc">&nbsp;        if (UserAccountStatusService.checkUserAccountStatus(securityIdentity.getPrincipal().getName())){</b>
+<b class="nc">&nbsp;            throw new IllegalStateException(&quot;User account is locked&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        List&lt;ArticleEntity&gt; listAll = ArticleEntity.findAll().list();</b>
+<b class="fc">&nbsp;        String userRole = securityIdentity.getRoles().stream().findFirst().get();</b>
+<b class="fc">&nbsp;        if (userRole.equals(UserRole.Publisher.name())){</b>
+<b class="fc">&nbsp;            return Response.ok().entity(listAll.stream().filter(s -&gt; s.status.equals(ArticleStatus.Approved.name())).map(entity -&gt; new Article(entity.id, getAuthor(entity.author_id), entity.title, entity.synopsis, entity.fulltext, entity.status))</b>
+<b class="fc">&nbsp;                    .collect(Collectors.toList())).build();</b>
+<b class="fc">&nbsp;        }else if (userRole.equals(UserRole.Reviewer.name())){</b>
+<b class="fc">&nbsp;            return Response.ok().entity(listAll.stream().filter(s -&gt; s.status.equals(ArticleStatus.ReadyForReview.name())).map(entity -&gt; new Article(entity.id, getAuthor(entity.author_id), entity.title, entity.synopsis, entity.fulltext, entity.status))</b>
+<b class="fc">&nbsp;                    .collect(Collectors.toList())).build();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        String username = securityIdentity.getPrincipal().getName();</b>
+<b class="fc">&nbsp;        return Response.ok().entity(listAll</b>
+<b class="fc">&nbsp;                .stream()</b>
+<b class="fc">&nbsp;                .map(entity -&gt; new Article(entity.id, getAuthor(entity.author_id), entity.title, entity.synopsis, entity.fulltext, entity.status))</b>
+<b class="fc">&nbsp;                .filter(s -&gt; s.getAuthor().getUsername().equals(username))</b>
+<b class="fc">&nbsp;                .collect(Collectors.toList())).build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Author getAuthor(long authorID) {
+<b class="fc">&nbsp;        if (UserAccountStatusService.checkUserAccountStatus(securityIdentity.getPrincipal().getName())){</b>
+<b class="nc">&nbsp;            throw new IllegalStateException(&quot;User account is locked&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        UserEntity entity = UserEntity.findById(authorID);</b>
+<b class="fc">&nbsp;        if (entity == null || !entity.user_role.equals(UserRole.Author.name())) {</b>
+<b class="nc">&nbsp;            throw new NotFoundException(&quot;Author with id &quot; + authorID +&quot; not found&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return new Author(entity.id, entity.username, entity.firstname, entity.lastname);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Transactional
+&nbsp;    public void create(Article article) throws InvalidAttributesException {
+<b class="fc">&nbsp;        if (UserAccountStatusService.checkUserAccountStatus(securityIdentity.getPrincipal().getName())){</b>
+<b class="nc">&nbsp;            throw new IllegalStateException(&quot;User account is locked&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Author author = getAuthor(article.getAuthor().authorID());</b>
+<b class="fc">&nbsp;        if (!author.getUsername().equals(article.getAuthor().getUsername())){</b>
+<b class="nc">&nbsp;            throw new InvalidAttributesException(&quot;Invalid author username&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        ArticleEntity entity = new ArticleEntity();</b>
+<b class="fc">&nbsp;        entity.author_id = article.getAuthor().authorID();</b>
+<b class="fc">&nbsp;        entity.title = policy.sanitize(article.getTitle());</b>
+<b class="fc">&nbsp;        entity.synopsis = policy.sanitize(article.getSynopsis());</b>
+<b class="fc">&nbsp;        entity.fulltext = policy.sanitize(article.getFulltext());</b>
+<b class="fc">&nbsp;        entity.status = ArticleStatus.Draft.name();</b>
+<b class="fc">&nbsp;        entity.persist();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Transactional
+&nbsp;    public Response update(Article article) {
+<b class="fc">&nbsp;        if (UserAccountStatusService.checkUserAccountStatus(securityIdentity.getPrincipal().getName())){</b>
+<b class="nc">&nbsp;            throw new IllegalStateException(&quot;User account is locked&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        ArticleEntity entity = ArticleEntity.findById(article.getIdentifier());</b>
+<b class="fc">&nbsp;        String userRole = securityIdentity.getRoles().stream().findFirst().get();</b>
+<b class="fc">&nbsp;        if (entity == null)</b>
+<b class="nc">&nbsp;            return Response.ok().entity(&quot;Article with the give ID not present&quot;).build();</b>
+&nbsp;
+&nbsp;        // Only the Author of the article can update the article if it is in draft state
+<b class="fc">&nbsp;        else if((entity.author_id == article.getAuthor().authorID()) &amp;&amp; (entity.status.equals(ArticleStatus.Draft.name())) &amp;&amp; !(article.getStatus().name().equals(ArticleStatus.ReadyForReview.name())) &amp;&amp; userRole.equals(UserRole.Author.name())){</b>
+<b class="nc">&nbsp;            entity.author_id = article.getAuthor().authorID();</b>
+<b class="nc">&nbsp;            entity.title = policy.sanitize(article.getTitle());</b>
+<b class="nc">&nbsp;            entity.synopsis = policy.sanitize(article.getSynopsis());</b>
+<b class="nc">&nbsp;            entity.fulltext = policy.sanitize(article.getFulltext());</b>
+<b class="nc">&nbsp;            return Response.ok().entity(&quot;Article metadata successfully updated&quot;).build();</b>
+&nbsp;        }
+&nbsp;        //Publisher can change the status to Published if the article has already been approved
+<b class="fc">&nbsp;        else if ((entity.status.equals(ArticleStatus.Approved.name())) &amp;&amp; (userRole.equals(UserRole.Publisher.name())) &amp;&amp; (article.getStatus().name().equals(ArticleStatus.Published.name()))){</b>
+<b class="fc">&nbsp;            entity.status = ArticleStatus.Published.name();</b>
+<b class="fc">&nbsp;            return Response.ok().entity(&quot;Article publish status successfully updated&quot;).build();</b>
+&nbsp;        }
+&nbsp;        //Reviewer can change the status to either Approved or Rejected if the article is ready to review
+<b class="fc">&nbsp;        else if ((entity.status.equals(ArticleStatus.ReadyForReview.name())) &amp;&amp; (userRole.equals(UserRole.Reviewer.name())) &amp;&amp; ((article.getStatus().name().equals(ArticleStatus.Approved.name()) || (article.getStatus().name().equals(ArticleStatus.Rejected.name()))))) {</b>
+<b class="fc">&nbsp;            entity.status = article.getStatus().name();</b>
+<b class="fc">&nbsp;            return Response.ok().entity(&quot;Article review status successfully updated&quot;).build();</b>
+&nbsp;        }
+&nbsp;        //Author can change the status of article from if article is in Draft, Rejected or Ready for review
+<b class="fc">&nbsp;        else if ((entity.author_id == article.getAuthor().authorID()) &amp;&amp; (userRole.equals(UserRole.Author.name())) &amp;&amp; ((article.getStatus().name().equals(ArticleStatus.Rejected.name())) ||(article.getStatus().name().equals(ArticleStatus.Draft.name())) || (article.getStatus().name().equals(ArticleStatus.ReadyForReview.name())))) {</b>
+<b class="fc">&nbsp;            entity.status = article.getStatus().name();</b>
+<b class="fc">&nbsp;            return Response.ok().entity(&quot;Author article status successfully updated&quot;).build();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return Response.ok().entity(&quot;Article currently not in draft state or doesn&#39;t have sufficient privilege&quot;).build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Transactional
+&nbsp;    public void delete(Long id) {
+<b class="nc">&nbsp;        if (UserAccountStatusService.checkUserAccountStatus(securityIdentity.getPrincipal().getName())){</b>
+<b class="nc">&nbsp;            throw new IllegalStateException(&quot;User account is locked&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        ArticleEntity.deleteById(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-20 23:46</div>
+</div>
+</body>
+</html>
